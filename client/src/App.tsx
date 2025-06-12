@@ -7,6 +7,7 @@ import Dashboard from "@/pages/dashboard";
 import PolicyManagement from "@/pages/policy-management";
 import ThreatIntelligence from "@/pages/threat-intelligence";
 import RiskAssessment from "@/pages/risk-assessment";
+import RealTimeMonitor from "@/pages/real-time-monitor";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/policies" component={PolicyManagement} />
       <Route path="/threats" component={ThreatIntelligence} />
       <Route path="/risk" component={RiskAssessment} />
+      <Route path="/monitor" component={RealTimeMonitor} />
       <Route component={NotFound} />
     </Switch>
   );
