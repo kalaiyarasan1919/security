@@ -278,6 +278,10 @@ export default function PolicyManagement() {
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDuplicate={handleDuplicate}
+            onNewPolicy={() => {
+              setEditingPolicy(null);
+              setIsDialogOpen(true);
+            }}
           />
         </div>
       </main>

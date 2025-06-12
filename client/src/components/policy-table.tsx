@@ -9,9 +9,10 @@ interface PolicyTableProps {
   onEdit?: (policy: Policy) => void;
   onDelete?: (id: number) => void;
   onDuplicate?: (policy: Policy) => void;
+  onNewPolicy?: () => void;
 }
 
-export default function PolicyTable({ policies, onEdit, onDelete, onDuplicate }: PolicyTableProps) {
+export default function PolicyTable({ policies, onEdit, onDelete, onDuplicate, onNewPolicy }: PolicyTableProps) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'active':
@@ -62,7 +63,10 @@ export default function PolicyTable({ policies, onEdit, onDelete, onDuplicate }:
             <p className="text-gray-400 text-sm mt-1">Manage and monitor policy enforcement</p>
           </div>
           <div className="flex items-center space-x-3">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={onNewPolicy}
+            >
               <i className="fas fa-plus mr-2"></i>New Policy
             </Button>
             <Button variant="outline" className="border-gray-600 hover:bg-slate-700 text-white">

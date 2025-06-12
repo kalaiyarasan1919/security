@@ -8,6 +8,7 @@ import PolicyManagement from "@/pages/policy-management";
 import ThreatIntelligence from "@/pages/threat-intelligence";
 import RiskAssessment from "@/pages/risk-assessment";
 import RealTimeMonitor from "@/pages/real-time-monitor";
+import ApiManagement from "@/pages/api-management";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/threats" component={ThreatIntelligence} />
       <Route path="/risk" component={RiskAssessment} />
       <Route path="/monitor" component={RealTimeMonitor} />
+      <Route path="/api" component={ApiManagement} />
       <Route component={NotFound} />
     </Switch>
   );
