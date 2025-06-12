@@ -233,7 +233,7 @@ export default function RealTimeMonitor() {
                           <div className="flex-1">
                             <div className="flex items-center space-x-2">
                               <span className="text-white text-sm font-medium">{event.eventType}</span>
-                              <Badge className={getSeverityColor(event.severity)} size="sm">
+                              <Badge className={getSeverityColor(event.severity)}>
                                 {event.severity}
                               </Badge>
                             </div>
@@ -275,7 +275,7 @@ export default function RealTimeMonitor() {
                         <div key={decision.id || index} className="flex items-center space-x-3 p-3 hover:bg-gray-800/50 rounded-lg">
                           <div className="flex-1">
                             <div className="flex items-center space-x-2">
-                              <Badge className={getDecisionColor(decision.decision)} size="sm">
+                              <Badge className={getDecisionColor(decision.decision)}>
                                 {decision.decision.replace('_', ' ').toUpperCase()}
                               </Badge>
                               {decision.riskScore && (
