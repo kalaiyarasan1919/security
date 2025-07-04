@@ -1,42 +1,59 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
+import { Switch, Route, Redirect } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Dashboard from "@/pages/dashboard";
-import PolicyManagement from "@/pages/policy-management";
-import ThreatIntelligence from "@/pages/threat-intelligence";
-import RiskAssessment from "@/pages/risk-assessment";
-import RealTimeMonitor from "@/pages/real-time-monitor";
-import ApiManagement from "@/pages/api-management";
-import Settings from "@/pages/settings";
-import NotFound from "@/pages/not-found";
+import { ThemeProvider } from "next-themes";
+import { useAuth } from "./hooks/useAuth";
+import { WebSocketProvider } from "./lib/websocket";
+import ErrorBoundary from "./components/ErrorBoundary";
+
+// Pages
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
+import TaskDetail from "@/pages/TaskDetail";
+import LoadingSpinner from "@/components/LoadingSpinner";
+
+function AuthenticatedApp() {
+  return (
+    <WebSocketProvider>
+      <Switch>
+        <Route path="/" component={Dashboard} />
+        <Route path="/task/:id" component={TaskDetail} />
+        <Route component={() => <Redirect to="/" />} />
+      </Switch>
+    </WebSocketProvider>
+  );
+}
 
 function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={Dashboard} />
-      <Route path="/policies" component={PolicyManagement} />
-      <Route path="/threats" component={ThreatIntelligence} />
-      <Route path="/risk" component={RiskAssessment} />
-      <Route path="/monitor" component={RealTimeMonitor} />
-      <Route path="/api" component={ApiManagement} />
-      <Route path="/settings" component={Settings} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!user) {
+    return <Login />;
+  }
+
+  return <AuthenticatedApp />;
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="dark">
-          <Toaster />
-          <Router />
-        </div>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <TooltipProvider>
+            <div className="min-h-screen bg-background text-foreground">
+              <Toaster />
+              <Router />
+            </div>
+          </TooltipProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
